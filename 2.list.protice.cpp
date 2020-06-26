@@ -1,18 +1,18 @@
 /*************************************************************************
-	> File Name: 2.list.cpp
+	> File Name: 2.list.protice.cpp
 	> Author: 
 	> Mail: 
-	> Created Time: Sun Jun  7 18:57:04 2020
+	> Created Time: Sat Jun 20 11:32:52 2020
  ************************************************************************/
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <time.h>
-typedef struct ListNode{
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<time.h>
+#include<string.h>
+typedef struct ListNode {
     int data;
     struct ListNode *next;
 } ListNode;
-
 typedef struct List {
     ListNode head;
     int length;
@@ -21,79 +21,80 @@ typedef struct List {
 ListNode *getNewNode(int);
 List *getLinkList();
 int insert(List *, int, int);
-int erase(List *,int);
-void reverser(List *);
+int erase(List *, int);
+void reserve(List *);
 void output(List *);
 void clear_ListNode(ListNode *);
 void clear_List(List *);
-void outout1(List *, int );
-int main(){
+void output1(List *, int);
+
+int main () {
     srand(time(0));
     #define max_op 20
     List *l = getLinkList();
-    int ind, op, val, flag;
-
+    int loc, op, val, flag;
     for (int i = 0; i < max_op; i++) {
+        loc = rand() % (l->length + 3) -1;
         op = rand() % 4;
-        ind = rand() % (l->length + 3) - 1;
-        val = rand() % 1000;
+        val = rand() % 10000;
         switch(op) {
-            case 0:
-            case 1: {
-                printf("insert %d at  %d to List = %d\n", val, ind, insert(l, ind, val));
-                flag = insert(l, ind, val);
-            }break;
-            case 2: {
-                printf("erase item at %d is from List = %d\n", ind, erase(l, ind));
-                flag = erase(l, ind);
-            }break;
-            case 3: {
-                printf("reverse the List !\n");
-                reverser(l);
+            case 0 :
+            case 1 : {
+                flag = insert(l, loc, val);
+                printf("insert %d at %d of list is %d\n", val, loc, flag);
+            } break;
+            case 2 : {
+                flag = erase(l, loc);
+                printf("erase item at %d of list is %d\n", loc, flag);
+            } break;
+            case 3 : {
                 flag = -1;
-            }break;
+                printf("reserve the List! \n");
+                reserve(l);
+            } break;
         }
         output(l);
-        outout1(l, flag);
+        output1(l, flag);
         printf("\n");
     }
     clear_List(l);
     #undef max_op
+
     return 0;
 }
 
-ListNode *getNewNode(int val) {
-    ListNode *p = (ListNode *) malloc (sizeof(ListNode));
+ListNode *getNewNode (int val) {
+    ListNode *p = (ListNode *)malloc(sizeof(ListNode));
     p->data = val;
     p->next = NULL;
     return p;
 }
 
-List *getLinkList(){
-    List *l =  (List *)malloc(sizeof(List));
+List *getLinkList() {
+    List *l = (List *)malloc(sizeof(List));
     l->head.next = NULL;
     l->length = 0;
     return l;
 }
 
-int insert(List *l, int ind, int val) {
-    int ret = ind;
+int insert(List *l, int loc, int val) {
+    int ret = loc;
     if (l == NULL) return -1;
-    if (ind < 0 || ind > l->length) return -1;
-    ListNode *p =&(l->head), *node = getNewNode(val);
-    while (ind--) p = p->next;
+    if (loc < 0 || loc > l->length) return -1;
+    ListNode *p = &(l->head), *node = getNewNode(val);
+    while (loc--) p = p->next;//头指针在loc 前一个节点
     node->next = p->next;
     p->next = node;
     l->length += 1;
     return ret;
 }
 
-int erase(List *l, int ind) {
-    int ret = ind;
+int erase(List *l, int loc) {
+    int ret = loc;
     if (l == NULL) return -1;
-    if (ind < 0 || ind >= l->length) return -1;
+    if (loc < 0 || loc >= l->length) return -1;
     ListNode *p = &(l->head), *q;
-    while (ind--) p = p->next;
+    while (loc--) p = p->next;
     q = p->next;
     p->next = q->next;
     free(q);
@@ -101,7 +102,7 @@ int erase(List *l, int ind) {
     return ret;
 }
 
-void output(List *l){
+void output(List *l) {
     printf("head->");
     for (ListNode *p = l->head.next; p; p = p->next) {
         printf("%d->", p->data);
@@ -109,27 +110,29 @@ void output(List *l){
     printf("NULL\n");
     return ;
 }
-void outout1(List *l, int ind) {
+
+void output1(List *l, int loc) {
     char str[100];
-    int offset = 3;
+    int offer = 3;
     ListNode *p = l->head.next;
-    while (ind != -1 && p) {
-        offset += sprintf(str, "%d->", p->data);
-        ind -= 1;
+    while (loc != -1 && p) {
+        offer += sprintf(str, "%d->", p->data);
+        loc -= 1;
         p = p->next;
     }
-    for (int i = 0; i < offset; i++) printf(" ");
+
+    for (int i = 0; i < offer; i++) printf(" ");
     printf("^\n");
-    for (int i = 0; i < offset; i++) printf(" ");
+    for (int i = 0; i < offer; i++) printf(" ");
     printf("|\n\n");
     return ;
 
 }
-//翻转
-void reverser(List *l) {
+
+void reserve (List *l) {
     ListNode *p = l->head.next, *q;
     l->head.next = NULL;
-    while (cur) {
+    while(p) {
         q = p->next;
         p->next = l->head.next;
         l->head.next = p;
@@ -139,13 +142,13 @@ void reverser(List *l) {
 }
 
 void clear_ListNode(ListNode *node) {
-    if(node == NULL) return ;
+    if (node == NULL) return;
     free(node);
     return ;
 }
 
 void clear_List(List *l) {
-    if (l == NULL) return ;
+    if (l == NULL) return;
     ListNode *p = l->head.next, *q;
     while (p) {
         q = p->next;
