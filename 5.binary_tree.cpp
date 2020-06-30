@@ -148,6 +148,7 @@ int main() {
     pre_order(tree);
     in_order(tree);
     post_order(tree);
+
     #undef max_op
     clear_tree(tree);
     return 0;

@@ -1,10 +1,9 @@
 /*************************************************************************
-	> File Name: test.cpp
+	> File Name: 单向循环链表变双向.cpp
 	> Author: 
 	> Mail: 
-	> Created Time: Sat Jun 27 11:42:19 2020
+	> Created Time: Mon Jun 29 20:51:53 2020
  ************************************************************************/
-
 /*************************************************************************
 	> File Name: 2.list.cpp
 	> Author: 
@@ -13,10 +12,9 @@
  ************************************************************************/
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include <time.h>
+
 typedef struct ListNode{
-    char data;
+    int data;
     struct ListNode *next;
 } ListNode;
 
@@ -25,7 +23,7 @@ typedef struct List {
     int length;
 } List;
 
-ListNode *getNewNode(char val) {
+ListNode *getNewNode(int val) {
     ListNode *p = (ListNode *) malloc (sizeof(ListNode));
     p->data = val;
     p->next = NULL;
@@ -38,8 +36,7 @@ List *getLinkList(){
     l->length = 0;
     return l;
 }
-
-int insert(List *l, int ind, char val) {
+int insert(List *l, int ind, int val) {
     int ret = ind;
     if (l == NULL) return -1;
     if (ind < 0 || ind > l->length) return -1;
@@ -51,26 +48,29 @@ int insert(List *l, int ind, char val) {
     return ret;
 }
 
+int erase(List *l, int ind) {
+    int ret = ind;
+    if (l == NULL) return -1;
+    if (ind < 0 || ind >= l->length) return -1;
+    ListNode *p = &(l->head), *q;
+    while (ind--) p = p->next;
+    q = p->next;
+    p->next = q->next;
+    free(q);
+    l->length -= 1;
+    return ret;
+}
 
 void output(List *l){
     printf("head->");
     for (ListNode *p = l->head.next; p; p = p->next) {
-        printf("%c->", p->data);
+        printf("%d->", p->data);
     }
     printf("NULL\n");
     return ;
 }
-void reverser(List *l) {
-    ListNode *p = l->head.next, *q;
-    l->head.next = NULL;
-    while (p) {
-        q = p->next;
-        p->next = l->head.next;
-        l->head.next = p;
-        p = q;
-    }
-    return ;
-}
+
+
 void clear_ListNode(ListNode *node) {
     if(node == NULL) return ;
     free(node);
@@ -88,18 +88,4 @@ void clear_List(List *l) {
     free(l);
     return ;
 }
-int main () {
-    int n;
-    char str;
-    scanf("%d", &n);
-    List *l = getLinkList();
-    for (int i = 0; i < n; i++) {
-        scanf("%c", &str);
-        i - n + 1 && scanf(" ");
-        insert(l, l->length, str);
-    }
-    //reverse(l);
-    output(l);
-    clear_List(l);
-    return 0;
-}
+
