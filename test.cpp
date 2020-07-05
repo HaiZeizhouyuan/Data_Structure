@@ -15,12 +15,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#define ope(a, sr, b) (a) sr (b) 
 
 int main() {
-    int a = 1, b = 2;
-    char sr = '*';
-    int c = ope(a,sr,b);
+    int a = 1, c = 2;
     printf("%d\n", c);
     return 0;
 }
