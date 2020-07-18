@@ -17,18 +17,20 @@
 #include <time.h>
 
 int main() {
-    int num[15];
+    int i = 0, n = 1;
+    int *num = (int *)malloc(n * sizeof(int));
     char str[15];
-    for (int i = 0; i < 5; i++) {
+    do {
         scanf("%d", num + i);
-    }
-    for (int i = 0; i < 5; i++) {
+        num = (int *)realloc(num, (++n) * sizeof(int));
+    } while(getchar() != '\n');
+    for (int i = 0; i < n - 1; i++) {
         printf("%d ", num[i]);
     }
     printf("\n");
-    for (int i = 0; i < 5; i++) {
+    /*for (int i = 0; i < 5; i++) {
         sprintf(str + i, "%d", num[i]);
         printf("%c", str[i]);
-    }
+    }*/
     return 0;
 }
