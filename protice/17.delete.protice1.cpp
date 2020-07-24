@@ -1,13 +1,9 @@
 /*************************************************************************
-	> File Name: suan_tou_jun_jian_shi_tou.cpp
+	> File Name: 17.delete.protice1.cpp
 	> Author: 
 	> Mail: 
-	> Created Time: Sat Jul  4 16:21:29 2020
+	> Created Time: Thu Jul 23 12:43:07 2020
  ************************************************************************/
 
-#include <stdlib.h>
-#include <stdio.h>
 
-int main () {
-    return 0;
-}
+
