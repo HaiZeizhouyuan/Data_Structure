@@ -98,8 +98,8 @@ Node *predessor(Node *root) {
     return temp;
 }
 
-Node *erase (Node *root, int val) {
-    if (root = NIL) return root;
+Node *erase(Node *root, int val) {
+    if (root == NIL) return root;
     if (root->data > val) root->lchild = erase(root->lchild, val);
     else if (root->data < val) root->rchild = erase(root->rchild, val);
     else {

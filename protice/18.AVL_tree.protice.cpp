@@ -69,7 +69,7 @@ Node *right_ramte(Node *root) {
 
 Node *maintain(Node *root) {
     updata(root);
-    if (abs(LH(root) - RH(root) <= 1)) return root;
+    if (abs(LH(root) - RH(root)) <= 1) return root;
     if (LH(root) > RH(root)) {
         if (LH(root->lchild) < RH(root->lchild)) {
             root->lchild = left_ramte(root->lchild);
@@ -110,7 +110,7 @@ Node *erase(Node *root, int val) {
         } else {
             Node *temp = predessor(root);
             root->data = temp->data;
-            root->lchild = erase(root->lchild, val);
+            root->lchild = erase(root->lchild, temp->data);
         }
     }
     return maintain(root);

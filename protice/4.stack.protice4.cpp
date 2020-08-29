@@ -1,25 +1,57 @@
 /*************************************************************************
-	> File Name: 3.queue.protice2.cpp
-	> Author: 
+	> File Name: 4.stack.protice4.cpp
+	> Author: zhouyuan
 	> Mail: 
-	> Created Time: Thu Jul 23 17:58:22 2020
+	> Created Time: 2020年08月28日 星期五 10时11分28秒
  ************************************************************************/
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 
-typedef struct queue {
+typedef struct Queue {
     int *data;
-    int size, cnt, head, tail;
-} Queue;
+    int size, head, tail, total;
+}Queue;
 
-Queue *getNewQueue(int n) {
+Queue *getNewQueue (int size) {
     Queue *q = (Queue *)malloc(sizeof(Queue));
-    q->data = (int *)malloc(sizeof(int) * n);
-    q->size = n;
-    q->cnt = q->head = q->tail = 0;
+    q->data = (int *)malloc(sizeof(int) * size);
+    q->total = q->head = q->tail = 0;
+    q->size = size;
     return q;
+}
+
+int expend(Queue *q) {
+    int extr_size = q->size;
+    int *p;
+    while(extr_size) {
+        p = (int *)malloc(sizeof(int *) * (extr_size + q->size));
+        if (p) break;
+        extr_size >>= 1;
+    }
+    if (p == NULL) return 0; 
+    for (int i = q->head, j = 0; j < q->size; j++) {
+        p[j] = q->data[(i + j) % q->size];
+    }
+    free(q->data);
+    q->data = p;
+    q->size += extr_size;
+    q->head = 0;
+    q->tail = q->total;
+    return 1;
+}
+
+int push(Queue *q, int val) {
+    if (q == NULL) return 0;
+    if (q->total == q->size) {
+        if (!expend(q)) return 0;
+        printf("\033[32mexpend Queue is success, and new size is %d\n\n\033[0m", q->size);
+    }
+    q->data[q->tail++] = val;
+    q->total += 1;
+    if (q->tail == q->size) q->tail -= q->size;
+    return 1;
 }
 
 int front(Queue *q) {
@@ -27,59 +59,25 @@ int front(Queue *q) {
 }
 
 int empty(Queue *q) {
-    return q->cnt == 0;
-}
-
-int expend(Queue *q) {
-    int extr_size = q->size;
-    int *p;
-    while (extr_size) {
-        p = (int *)malloc(sizeof(int) * (extr_size + q->size));
-        if (p) break;
-        extr_size >>= 1;
-    }
-    if (!extr_size) return 0;
-    int i = q->head;
-    for (int j = 0; j < q->cnt; j++) {
-        p[i] = q->data[(j + i) % q->size];
-    }
-    free(q->data);
-    q->data = p;
-    q->size += extr_size;
-    q->head = 0;
-    q->tail = q->cnt;
-    return 1;
-}
-
-int push(Queue *q, int val) {
-    if (q == NULL) return 0;
-    if (q->cnt == q->size) {
-        if (!expend(q)) return 0;
-        printf("expend the queue is %s, and new size is %d\n", expend(q) ? "success" : "failed", q->size);
-    }
-    q->data[q->tail++] = val;
-    if (q->tail == q->size) q->tail -= q->size;
-    q->cnt += 1;
-    return 1;
+    return q->total == 0;
 }
 
 int pop(Queue *q) {
     if (q == NULL) return 0;
     if (empty(q)) return 0;
     q->head += 1;
-    if(q->head == q->size) q->head -= q->size;
-    q->cnt -= 1;
+    q->total -= 1;
+    if (q->head == q->size) q->head -= q->size;
     return 1;
 }
 
 void output(Queue *q) {
-    printf("Queue : [");
-    for (int i = q->head, j = 0; j < q->cnt; j++) {
+    printf("Queue(%d) : [", q->size);
+    for (int i = q->head, j = 0; j < q->total; j++) {
         j && printf(",");
-        printf("%d", q->data[(j + i) % q->size]);
+        printf("%d", q->data[(i + j) % q->size]);
     }
     printf("]\n\n");
-    return ;
 }
 
 void clear(Queue *q) {
@@ -89,10 +87,10 @@ void clear(Queue *q) {
     return ;
 }
 
-int main () {
+int main() {
     srand(time(0));
     #define max_op 20
-    Queue *q = getNewQueue(max_op);
+    Queue *q = getNewQueue(10);
     for (int i = 0; i < max_op; i++) {
         int val = rand() % 100;
         int op = rand() % 4;
@@ -100,16 +98,17 @@ int main () {
             case 0:
             case 1:
             case 2:
-            printf("push %d is %s\n", val, push(q, val) ? "success" : "failed");
+            printf("push %d to Queue is %s \n", val, push(q, val) ? "success" : "failed");
                 break;
             case 3:
                 int f = front(q);
-            printf("pop %d is %s\n", f, pop(q) ? "success" : "failed");
+            printf("pop %d from Queue is %s\n", f, pop(q) ? "success" : "failed");
                 break;
         }
         output(q);
     }
-    #undef max_op
     clear(q);
+    #undef max_op
+ 
     return 0;
 }
