@@ -11,7 +11,7 @@
 #include<math.h>
 #include<time.h>
 #include<unistd.h>
- 
+#include"sort.txt"
 #define swap(a, b){\
     __typeof(a) __tmp = (a);\
     (a) = (b), (b) = __tmp;\
@@ -53,15 +53,15 @@ void output(int *arr, int n) {
 
 int main() {
     srand(time(0));
-    #define max_op 20
-    int *arr = (int *)malloc(sizeof(int) * max_op);
+    #define max_op 6
+  /* int *arr = (int *)malloc(sizeof(int) * max_op);
     for (int i = 0; i < max_op; i++) {
         arr[i] = rand() % 100;
-    }
+    }*/
     output(arr, max_op);
     merge_sort(arr, 0, max_op - 1);
     output(arr, max_op);
-    free(arr);
+   // free(arr);
     #undef max_op
     return 0;
 }
