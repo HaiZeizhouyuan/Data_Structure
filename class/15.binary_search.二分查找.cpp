@@ -51,7 +51,6 @@ int search_first1(int *num, int n) {
 }
 
 
-
 int main(){
     int arr1[10] = {1, 2, 3, 5, 7, 9, 10, 11, 12, 13};
     int arr2[10] = {1, 1, 1, 1, 1, 0, 0, 0 ,0 ,0};

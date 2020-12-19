@@ -40,12 +40,12 @@ int main(){
         switch(op) {
             case 0:
             case 1: {
-                printf("insert %d at  %d to List = %d\n", val, ind, insert(l, ind, val));
                 flag = insert(l, ind, val);
+                printf("insert %d at  %d to List = %d\n", val, ind, flag);
             }break;
             case 2: {
-                printf("erase item at %d is from List = %d\n", ind, erase(l, ind));
                 flag = erase(l, ind);
+                printf("erase item at %d is from List = %d\n", ind, flag);
             }break;
             case 3: {
                 printf("reverse the List !\n");
@@ -80,7 +80,7 @@ int insert(List *l, int ind, int val) {
     int ret = ind;
     if (l == NULL) return -1;
     if (ind < 0 || ind > l->length) return -1;
-    ListNode *p =&(l->head), *node = getNewNode(val);
+    ListNode *p = &(l->head), *node = getNewNode(val);
     while (ind--) p = p->next;
     node->next = p->next;
     p->next = node;

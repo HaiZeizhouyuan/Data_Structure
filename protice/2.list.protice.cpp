@@ -131,7 +131,6 @@ void output1(List *l, int loc) {
 
 void reserve (List *l) {
     ListNode *p = l->head.next, *q;
-    l->head.next = NULL;
     while(p) {
         q = p->next;
         p->next = l->head.next;
@@ -140,6 +139,7 @@ void reserve (List *l) {
     }
     return ;
 }
+
 
 void clear_ListNode(ListNode *node) {
     if (node == NULL) return;
