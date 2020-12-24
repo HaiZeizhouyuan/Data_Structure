@@ -1,12 +1,17 @@
 /*************************************************************************
-	> File Name: 17.binary_search_tree.cpp
-	> Author: huguang
-	> Mail: hug@haizeix.com
-	> Created Time: 
+	> File Name: 12.binary_search_tree.cpp
+	> Author: zhouyuan
+	> Mail: 3294207721@qq.com 
+	> Created Time: 2020年12月19日 星期六 13时55分54秒
  ************************************************************************/
 
-#include <stdio.h>
-#include <stdlib.h>
+#include<iostream>
+#include<cstring>
+#include<algorithm>
+#include<cstdio>
+#include<queue>
+#include<vector>
+using namespace std;
 #define KEY(n) (n ? n->key : 0)
 #define SIZE(n) (n ? n->size : 0)
 #define L(n) (n ? n->lchild : NULL)
@@ -20,7 +25,7 @@ Node *getNewNode(int key) {
     Node *p = (Node *)malloc(sizeof(Node));
     p->key = key;
     p->size = 1;
-    p->lchild = p->rchild = NULL;
+    p->rchild = p->lchild = NULL;
     return p;
 }
 
@@ -43,6 +48,7 @@ int search_k(Node *root, int k) {
         return search_k(root->lchild, k);
     }
     return search_k(root->rchild, k - SIZE(L(root)) - 1);
+
 }
 
 Node *insert(Node *root, int key) {
@@ -56,16 +62,16 @@ Node *insert(Node *root, int key) {
 
 Node *predecessor(Node *root) {
     Node *temp = root->lchild;
-    while (temp->rchild) temp = temp->rchild;
+    while(temp->rchild) temp = temp->rchild;
     return temp;
 }
 
-Node *erase(Node *root, int key) {
+Node *earse(Node *root, int key) {
     if (root == NULL) return NULL;
     if (key < root->key) {
-        root->lchild = erase(root->lchild, key);
+        root->lchild = earse (root->lchild, key);
     } else if (key > root->key) {
-        root->rchild = erase(root->rchild, key);
+        root->rchild = earse(root->rchild, key);
     } else {
         if (root->lchild == NULL || root->rchild == NULL) {
             Node *temp = root->lchild ? root->lchild : root->rchild;
@@ -74,7 +80,7 @@ Node *erase(Node *root, int key) {
         } else {
             Node *temp = predecessor(root);
             root->key = temp->key;
-            root->lchild = erase(root->lchild, temp->key);
+            root->lchild = earse(root->lchild, temp->key);
         }
     }
     update_size(root);
@@ -91,8 +97,8 @@ void clear(Node *root) {
 
 void print(Node *root) {
     printf("(%d[%d], %d, %d)\n", 
-           KEY(root), SIZE(root), 
-           KEY(root->lchild), KEY(root->rchild)
+          KEY(root), SIZE(root),
+          KEY(root->lchild), KEY(root->rchild)
     );
     return ;
 }
@@ -119,28 +125,25 @@ void output_k(Node *root, int k) {
 
 int main() {
     int op, val;
-    Node *root =  NULL;
-    while (~scanf("%d%d", &op, &val)) {
-        switch (op) {
+    Node *root = NULL;
+    while(~scanf("%d%d", &op, &val)) {
+        switch(op) {
             case 0: printf("search %d, result : %d\n", val, search(root, val)); break;
             case 1: root = insert(root, val); break;
-            case 2: root = erase(root, val); break;
+            case 2: root = earse(root, val); break;
             case 3: {
-                printf("search k = %d, result : %d\n", 
-                    val, search_k(root, val)); 
+                printf("search k = %d, result : %d\n", val, search_k(root, val));
             } break;
-            case 4: { 
+            case 4: {
                 printf("output top-%d elements\n", val);
-                output_k(root, val); 
-                printf("------------\n");
+                output_k(root, val);
+                printf("----------\n");
             } break;
         }
         if (op == 1 || op == 2) {
             output(root);
-            printf("------------\n");
+            printf("----------\n");
         }
     }
-    clear(root);
     return 0;
 }
-
