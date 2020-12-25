@@ -40,15 +40,16 @@ void insert_sort(int *arr, int n) {
 }
 
 void bubble_sort(int *arr, int n) {
-    int time = 1;
+    //int time = 1;
     for (int i = 1; i < n && time; i++) {
-        time = 0;
+        int time = 0;
         for (int j = 0; j < n - i; j++) {
             if (arr[j] > arr[j + 1]) {
                 swap(arr[j], arr[j + 1]);
                 time = 1;
             }
         }
+        if (time == 0) break;
     }
     return ;
 }
