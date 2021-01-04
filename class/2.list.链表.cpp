@@ -103,9 +103,14 @@ int erase(List *l, int ind) {
 
 void output(List *l){
     printf("head->");
-    for (ListNode *p = l->head.next; p; p = p->next) {
+    ListNode *p = l->head.next;
+    while(p) {
         printf("%d->", p->data);
+        p = p->next;
     }
+    /*for (ListNode *p = l->head.next; p; p = p->next) {
+        printf("%d->", p->data);
+    }*/
     printf("NULL\n");
     return ;
 }

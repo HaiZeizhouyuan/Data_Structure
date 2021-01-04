@@ -85,7 +85,7 @@ Node *insert(Node *root, int key) {
 
 Node *predecessor(Node *root) {
     Node *temp = root->lchild;
-    while (temp->rchild) temp = temp->rchild;
+    while (temp->rchild != NIL) temp = temp->rchild;
     return temp;
 }
 
