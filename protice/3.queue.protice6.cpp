@@ -1,8 +1,8 @@
 /*************************************************************************
-	> File Name: 3.queue.protice4.cpp
+	> File Name: 3.queue.protice6.cpp
 	> Author: zhouyuan
 	> Mail: 3294207721@qq.com 
-	> Created Time: 2021年01月04日 星期一 20时54分13秒
+	> Created Time: 2021年01月05日 星期二 17时14分36秒
  ************************************************************************/
 
 #include<iostream>
@@ -12,17 +12,17 @@
 #include<queue>
 #include<vector>
 using namespace std;
- 
-typedef struct Queue {
-    int *data;
-    int size, head, tail, cnt;
-} Queue;
 
-Queue *init(int n) {
+typedef struct Queue{
+    int *data;
+    int head, tail, cnt, size;
+}Queue;
+
+Queue *getNewQue(int n) {
     Queue *q = (Queue *)malloc(sizeof(Queue));
     q->data = (int *)malloc(sizeof(int) * n);
-    q->size = n;
     q->head = q->tail = q->cnt = 0;
+    q->size = n;
     return q;
 }
 
@@ -30,14 +30,14 @@ int expend(Queue *q) {
     int extr_size = q->size;
     int *p;
     while(extr_size) {
-        p = (int *)malloc(sizeof(int) * (q->size + extr_size));
-        if (p) break;
+        p = (int *)malloc(sizeof(int) * (extr_size + q->size));
+        if(p) break;
         extr_size /= 2;
     }
     if (p == NULL) return 0;
     int i = q->head;
     for (int j = 0; j < q->cnt; j++) {
-        q->data[j] = q->data[(i + j) % q->size];
+        p[j] = q->data[(i + j) % q->size];
     }
     free(q->data);
     q->data = p;
@@ -51,13 +51,14 @@ int push(Queue *q, int val) {
     if (q == NULL) return 0;
     if (q->cnt == q->size) {
         if (!expend(q)) return 0;
-        printf("\033[32mexpend successful!\033[0m""size = %d\n", q->size);
+        printf("expend Queueu is success!");
     }
     q->data[q->tail++] = val;
     if (q->tail == q->size) q->tail = 0;
     q->cnt += 1;
     return 1;
 }
+
 
 int front(Queue *q) {
     return q->data[q->head];
@@ -66,11 +67,10 @@ int front(Queue *q) {
 int empty(Queue *q) {
     return q->cnt == 0;
 }
-
 int pop(Queue *q) {
     if (q == NULL) return 0;
     if (!empty(q)) return 0;
-    q->head++;
+    q->head += 1;
     if (q->head == q->size) q->head = 0;
     q->cnt -= 1;
     return 1;
@@ -79,10 +79,9 @@ int pop(Queue *q) {
 void output(Queue *q) {
     int i = q->head;
     for (int j = 0; j < q->cnt; j++) {
-        j && printf(", ");
         printf("%d", q->data[(i + j) % q->size]);
     }
-    return ;
+    printf("\n");
 }
 
 void clear(Queue *q) {
@@ -91,6 +90,9 @@ void clear(Queue *q) {
     free(q);
     return ;
 }
+
+
+
 
 int main() {
  
