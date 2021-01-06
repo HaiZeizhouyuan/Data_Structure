@@ -61,9 +61,9 @@ void insert_sort(int *data, int n) {
 //冒泡排序
 void bubble_sort (int *data, int n) {
     int times = 1;
-    for (int i = 1; i < n && times; i++) {
+    for (int i = n - 1; i >= 1 && times; i--) {
         int times = 0;
-        for (int j = 0; j < n - i; j++) {
+        for (int j = 0; j < i; j++) {
             if (data[j] <= data[j + 1]) continue;
             swap(data[j], data[j + 1]);
             times += 1;
