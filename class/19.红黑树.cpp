@@ -57,13 +57,12 @@ Node *right_rotate(Node *root) {
 Node *insert_maintain(Node *root) {
     if (!has_red_child(root)) return root;
     int flag = 0;
-    if (root->lchild->color == RED && root->rchild->color == RED) {
-        if (!has_red_child(root->lchild) && !has_red_child(root->rchild)) return root;
-        goto insert_end;
-    }
     if (root->lchild->color == RED && has_red_child(root->lchild)) flag = 1;
     if (root->rchild->color == RED && has_red_child(root->rchild)) flag = 2;
     if (flag == 0) return root;    
+    if (root->lchild->color == RED && root->rchild->color == RED) {
+        goto insert_end;
+    }
     if (flag == 1) {
         if (root->lchild->rchild->color == RED) {
             root->lchild = left_rotate(root->lchild);
@@ -111,9 +110,11 @@ Node *erase_maintain(Node *root) {
         int flag = 0;
         root->color = RED;
         if (root->lchild->color == RED) {//右双黑,左红色
-            root = right_rotate(root); flag = 1;
+            root = right_rotate(root); 
+            flag = 1;
         } else {//左双黑,右红色
-            root = left_rotate(root); flag = 2;
+            root = left_rotate(root);
+            flag = 2;
         }
         root->color = BLACK;
         if (flag == 1) root->rchild = erase_maintain(root->rchild);
@@ -133,7 +134,7 @@ Node *erase_maintain(Node *root) {
     }
   
     if (root->lchild->color == DBLACK) {//根节点的左孩子是双黑的
-        root->lchild->color -= 1;
+        root->lchild->color = 1;
         if (root->rchild->rchild->color != RED) {//情况二：兄弟节点的右孩子是黑的，左孩子是红的
             root->rchild->color = RED;
             root->rchild = right_rotate(root->rchild);
@@ -143,7 +144,7 @@ Node *erase_maintain(Node *root) {
         root = left_rotate(root);
         root->color = root->lchild->color;
     } else {//根节点的右孩子是双黑的
-        root->rchild->color -= 1;
+        root->rchild->color = 1;
         if (root->lchild->lchild->color != RED) {//兄弟节点的右孩子是红的, 左孩子是黑的
             root->lchild->color = RED;
             root->lchild = left_rotate(root->lchild);
