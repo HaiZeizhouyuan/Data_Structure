@@ -1,0 +1,2 @@
+#!/bin/bash 
+gcc main.c ./compress.c ./decompression.c ./huffman1.c -o HUF -D _D
