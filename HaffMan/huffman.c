@@ -35,10 +35,10 @@ void selects(HufNode *huf_tree, unsigned int n, int *s1, int *s2)
 			min = huf_tree[i].weight;
 			*s1 = i;
 		}
-		huf_tree[*s1].parent=1;   // 标记此结点已被选中
+		huf_tree[*s1].parent = 1;   // 标记此结点已被选中
 
 	// 找次小
-	min=ULONG_MAX;
+	min = ULONG_MAX;
 	for(i = 0; i < n; ++i)            
 		if(huf_tree[i].parent == 0 && huf_tree[i].weight < min)
 		{
@@ -67,21 +67,23 @@ void HufCode(HufNode *huf_tree, unsigned char_kinds)
 {
 	unsigned int i;
 	int cur, next, index;
-	char *code_tmp = (char *)malloc(MAX_SIZE*sizeof(char));		// 暂存编码，最多MAX_SIZE个叶子，编码长度不超多255
-	code_tmp[MAX_SIZE-1] = '\0'; 
+	char *code_tmp = (char *)malloc(MAX_SIZE * sizeof(char));		// 暂存编码，最多MAX_SIZE个叶子，编码长度不超多255
+	code_tmp[MAX_SIZE - 1] = '\0'; 
 
-	for(i = 0; i < char_kinds; ++i) 
+	for(i = 0; i < char_kinds; i++) 
 	{
-		index = MAX_SIZE-1;	// 编码临时空间索引初始化
+		index = MAX_SIZE - 1;	// 编码临时空间索引初始化
 
 		// 从叶子向根反向遍历求编码
 		for(cur = i, next = huf_tree[i].parent; next != 0; 
-			cur = next, next = huf_tree[next].parent)  
-			if(huf_tree[next].lchild == cur) 
+			cur = next, next = huf_tree[next].parent){
+			if(huf_tree[next].lchild == cur) {
 				code_tmp[--index] = '0';	// 左‘0’
-			else 
+            } else {
 				code_tmp[--index] = '1';	// 右‘1’
-		huf_tree[i].code = (char *)malloc((MAX_SIZE-index)*sizeof(char));			// 为第i个字符编码动态分配存储空间 
+            }
+        }
+		huf_tree[i].code = (char *)malloc((MAX_SIZE - index) * sizeof(char));			// 为第i个字符编码动态分配存储空间 
 		strcpy(huf_tree[i].code, &code_tmp[index]);     // 正向保存编码到树结点相应域中
 	} 
 	free(code_tmp);		// 释放编码临时空间
