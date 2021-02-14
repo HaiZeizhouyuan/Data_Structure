@@ -92,6 +92,30 @@ void quick_sort(int *num, int l, int r) {
 }
 
 
+template<typename T>
+void insert_sort(T st, T ed, T delta, T *nums) {
+    for (T i = st + delta; i < ed; i += delta) {
+        for (T j = i; j > st; j -= delta ) {
+            if (nums[j] < nums[j - delta]) {
+                swap(nums[j], nums[j - delta]);
+            } else {
+                break;
+            }
+        }
+    }
+}
+
+template<typename T>
+void shell_sort(T *nums, T st, T ed) {
+    for (int delta = (ed - st) / 2; delta; delta /= 2) {
+        for (int i = 0; i < delta ; i++) {
+            insert_sort(st + i, ed, delta, nums);
+        }
+    }
+}
+
+
+
 void randint(int *num, int n) {
     while(n--) num[n] = rand() % 100;
     return ;
@@ -113,6 +137,7 @@ int main () {
     randint(arr, max_op);
     //TEST(arr, max_op, select_sort, num, max_op);
     TEST(arr, max_op, quick_sort, num, 0, max_op - 1);
+    TEST(arr, max_op, shell_sort, num, 0, max_op);
     #undef max_op
     return 0;
 }

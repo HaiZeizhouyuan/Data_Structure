@@ -72,6 +72,8 @@ void bubble_sort (int *data, int n) {
     return ;
 }
 
+
+
 void randint(int *data, int n){
     for (int i = 0; i < n; i++) {
         int val = rand() % 100;

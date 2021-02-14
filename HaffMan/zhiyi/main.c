@@ -5,15 +5,7 @@
 	> Created Time: 2021年02月04日 星期四 12时43分37秒
  ************************************************************************/
 
-#include<stdio.h>
-#include<stdlib.h>
-#include<string.h>
-#include<math.h>
-#include<time.h>
-#include<unistd.h>
-#include<stdbool.h>
-#include "./compress.h"
-#include "./decompression.h"
+#include "./include/head.h"
 
 #define FILE_SIZE 260
 char inFileName[FILE_SIZE + 5], outFileName[FILE_SIZE + 5];

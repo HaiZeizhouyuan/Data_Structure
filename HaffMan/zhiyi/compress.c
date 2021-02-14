@@ -5,8 +5,7 @@
 	> Created Time: 2021年02月04日 星期四 12时50分15秒
  ************************************************************************/
 
-#include "data.h"
-#include "./huffman.h"
+#include "./include/head.h"
 
 TmpNode *tmp_nodes;
 unsigned int i, j;

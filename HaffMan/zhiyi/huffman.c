@@ -5,7 +5,7 @@
 	> Created Time: 2021年02月04日 星期四 12时53分10秒
  ************************************************************************/
 
-#include "data.h"
+#include "./include/head.h"
 
 void initHuff(HufNode *huf_tree, unsigned int char_kinds, TmpNode *tmp_nodes, unsigned int node_num) {     
 	// 初始化前char_kinds个结点

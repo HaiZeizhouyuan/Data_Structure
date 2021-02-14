@@ -4,8 +4,7 @@
 	> Mail: 
 	> Created Time: 2021年02月04日 星期四 12时52分04秒
  ************************************************************************/
- #include "data.h"
- #include "./huffman.h"
+ #include "./include/head.h"
 
 unsigned long file_len;
 unsigned long writen_len = 0;		// 控制文件写入长度
@@ -18,7 +17,7 @@ unsigned int root;		// 保存根节点索引，供匹配编码使用
 
 
 // 解压函数
-int decompression(char *inFileName, char *outFileName)
+int decompression(const char *inFileName, const char *outFileName)
 {
 
     if ((infile = fopen(inFileName, "r")) == NULL) {		// 以二进制方式打开压缩文件
